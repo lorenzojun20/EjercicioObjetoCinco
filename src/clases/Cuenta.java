@@ -14,7 +14,7 @@ public class Cuenta {
     private long numero_identificacion;
     private double saldo_actual;
 
-    public Cuenta(int numero_cuenta, int numero_identificacion, double saldo_actual) {
+    public Cuenta(long numero_cuenta, long numero_identificacion, double saldo_actual) {
         this.numero_cuenta = numero_cuenta;
         this.numero_identificacion = numero_identificacion;
         this.saldo_actual = saldo_actual;

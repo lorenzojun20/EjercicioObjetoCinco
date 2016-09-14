@@ -5,7 +5,6 @@
  */
 package interfaz;
 
-
 import clases.Cuenta;
 import javax.swing.JOptionPane;
 
@@ -18,21 +17,19 @@ public class Principal extends javax.swing.JFrame {
     /**
      * Creates new form Principal
      */
-    Cuenta c; 
-    long numero_cuenta, numero_identificacion;;
-    double saldo_actual;
+    Cuenta c;
     public Principal() {
         initComponents();
-         txtNumeroCuenta.setEditable(true);
+        txtNumeroCuenta.setEditable(true);
         txtNumeroID.setEditable(true);
         txtSaldoActual.setEditable(true);
-        
+
         cmdCrear.setEnabled(true);
         cmdIngresar.setEnabled(false);
         cmdRetirar.setEnabled(false);
         cmdActualizar.setEnabled(false);
-        cmdMostrar.setEnabled(true);
-        cmdLimpiar.setEnabled(true);
+        cmdMostrar.setEnabled(false);
+        cmdLimpiar.setEnabled(false);
     }
 
     /**
@@ -128,16 +125,34 @@ public class Principal extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Número de Cuenta:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 110, 20));
+
+        txtNumeroCuenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumeroCuentaKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtNumeroCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 110, 30));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Número de Identificación: ");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 130, 20));
+
+        txtNumeroID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumeroIDKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtNumeroID, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 110, 30));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Saldo Actual:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 120, 20));
+
+        txtSaldoActual.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSaldoActualKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtSaldoActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, 110, 30));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Resultado"));
@@ -168,86 +183,160 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmdCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCrearActionPerformed
-        if(txtNumeroCuenta.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Espacio Vacío, Favor Llénelo","ERROR",JOptionPane.ERROR_MESSAGE);
+        if (txtNumeroCuenta.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Espacio Vacío, Favor Llénelo", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtNumeroCuenta.requestFocusInWindow();
-        }
-        else if(txtNumeroID.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Espacio Vacío, Favor Llénelo","ERROR",JOptionPane.ERROR_MESSAGE);
+        } else if (txtNumeroID.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Espacio Vacío, Favor Llénelo", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtNumeroID.requestFocusInWindow();
-        }
-        else if(txtSaldoActual.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Espacio Vacío, Favor Llénelo","ERROR",JOptionPane.ERROR_MESSAGE);
+        } else if (txtSaldoActual.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Espacio Vacío, Favor Llénelo", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtSaldoActual.requestFocusInWindow();
-        }
-        else{
+        } else {
+            long n_cuenta,n_id;
+            double s_actual;
+            n_cuenta = Long.parseLong(txtNumeroCuenta.getText());
+            n_id = Long.parseLong(txtNumeroID.getText());
+            s_actual = Double.parseDouble(txtSaldoActual.getText());
+            c = new Cuenta(n_cuenta,n_id,s_actual);
             JOptionPane.showMessageDialog(this, "¡Cuenta Creada Exitosamente!");
-             txtNumeroCuenta.setEditable(false);
-        txtNumeroID.setEditable(false);
-        txtSaldoActual.setEditable(false);
-        
-        cmdCrear.setEnabled(false);
-        cmdIngresar.setEnabled(true);
-        cmdRetirar.setEnabled(true);
-        cmdActualizar.setEnabled(true);
-        cmdMostrar.setEnabled(true);
-        cmdLimpiar.setEnabled(true);
+            txtNumeroCuenta.setEditable(false);
+            txtNumeroID.setEditable(false);
+            txtSaldoActual.setEditable(false);
+
+            cmdCrear.setEnabled(false);
+            cmdIngresar.setEnabled(true);
+            cmdRetirar.setEnabled(true);
+            cmdActualizar.setEnabled(true);
+            cmdMostrar.setEnabled(true);
+            cmdLimpiar.setEnabled(true);
         }
     }//GEN-LAST:event_cmdCrearActionPerformed
 
     private void cmdIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdIngresarActionPerformed
         double aux;
-         aux = Double.parseDouble(JOptionPane.showInputDialog(this, "Digite El Valor a Ingresar en la Cuenta"));
-         c.ingresar(aux);
-          txtNumeroCuenta.setEditable(false);
-        txtNumeroID.setEditable(false);
-        txtSaldoActual.setEditable(false);
-        
-        cmdCrear.setEnabled(false);
-        cmdIngresar.setEnabled(true);
-        cmdRetirar.setEnabled(true);
-        cmdActualizar.setEnabled(true);
-        cmdMostrar.setEnabled(true);
-        cmdLimpiar.setEnabled(true);
-        
+        int sw = 0;
+        do {
+            try {
+                aux = Double.parseDouble(JOptionPane.showInputDialog(this, "Digite Cantidad a ingresar"));
+                if (aux < 1) {
+                    JOptionPane.showMessageDialog(this, "digite un numero valido", "Error", JOptionPane.ERROR_MESSAGE);
+                    sw = 0;
+                } else {
+                    c.ingresar(aux);
+                    sw = 1;
+                    txtNumeroCuenta.setEditable(false);
+                    txtNumeroID.setEditable(false);
+                    txtSaldoActual.setEditable(false);
+
+                    cmdCrear.setEnabled(false);
+                    cmdIngresar.setEnabled(true);
+                    cmdRetirar.setEnabled(true);
+                    cmdActualizar.setEnabled(true);
+                    cmdMostrar.setEnabled(true);
+                    cmdLimpiar.setEnabled(true);
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "digite un numero valido", "Error", JOptionPane.ERROR_MESSAGE);
+                sw = 0;
+            } catch (NullPointerException e) {
+                int aux2 = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas salir?", "Salir", JOptionPane.YES_NO_OPTION);
+                if (aux2 == 0) {
+                    sw = 1;
+                } else {
+                    sw = 0;
+                }
+            }
+        } while (sw == 0);
     }//GEN-LAST:event_cmdIngresarActionPerformed
 
     private void cmdRetirarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdRetirarActionPerformed
         double aux;
+        int sw = 0;
         aux = Double.parseDouble(JOptionPane.showInputDialog(this, "Digite El Valor a Egresar en la Cuenta"));
-        if(aux > saldo_actual){
-            JOptionPane.showMessageDialog(this, "La Cantidad que quiere retirar es mayor a su saldo");
-           }else{
-            c.ingresar(aux);
-            txtNumeroCuenta.setEditable(false);
-        txtNumeroID.setEditable(false);
-        txtSaldoActual.setEditable(false);
-        
-        cmdCrear.setEnabled(false);
-        cmdIngresar.setEnabled(true);
-        cmdRetirar.setEnabled(true);
-        cmdActualizar.setEnabled(true);
-        cmdMostrar.setEnabled(true);
-        cmdLimpiar.setEnabled(true);
-        }
-        
+        do {
+            try {
+                if (aux > c.getSaldo_actual()) {
+                    JOptionPane.showMessageDialog(this, "La Cantidad que quiere retirar es mayor a su saldo");
+                    sw = 0;
+                } else if (aux < 0) {
+                    JOptionPane.showMessageDialog(this, "Digite una cantidad válida", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    sw = 0;
+                } else {
+                    c.ingresar(aux);
+                    sw = 1;
+                    
+                    txtNumeroCuenta.setEditable(false);
+                    txtNumeroID.setEditable(false);
+                    txtSaldoActual.setEditable(false);
+
+                    cmdCrear.setEnabled(false);
+                    cmdIngresar.setEnabled(true);
+                    cmdRetirar.setEnabled(true);
+                    cmdActualizar.setEnabled(true);
+                    cmdMostrar.setEnabled(true);
+                    cmdLimpiar.setEnabled(true);
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Digite un Número Válido", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } catch (NullPointerException e) {
+                int aux2 = JOptionPane.showConfirmDialog(this, "¿Seguro que Desea Salir?", "SALIR", JOptionPane.YES_NO_OPTION);
+                if (aux2 == 0) {
+                    sw = 1;
+                } else {
+                    sw = 0;
+                }
+            }
+        } while (sw == 0);
+
+
     }//GEN-LAST:event_cmdRetirarActionPerformed
 
     private void cmdActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdActualizarActionPerformed
-       double interesan;
-       
-       interesan = Double.parseDouble(JOptionPane.showInputDialog(this,"Digite el Interes Anual"));
-       c.actualizarSaldo(interesan);
+        double interesan;
+        int sw = 0;
+        interesan = Double.parseDouble(JOptionPane.showInputDialog(this, "Digite el Interés Anual"));
+        do {
+            try {
+                if (interesan < 0) {
+                    JOptionPane.showMessageDialog(this, "Digite una Cantidad Válida", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    sw = 0;
+                } else {
+                    c.actualizarSaldo(interesan);
+                    sw = 1;
+                    txtNumeroCuenta.setEditable(false);
+                    txtNumeroID.setEditable(false);
+                    txtSaldoActual.setEditable(false);
+
+                    cmdCrear.setEnabled(false);
+                    cmdIngresar.setEnabled(true);
+                    cmdRetirar.setEnabled(true);
+                    cmdActualizar.setEnabled(true);
+                    cmdMostrar.setEnabled(true);
+                    cmdLimpiar.setEnabled(true);
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Digite un Número Válido", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } catch (NullPointerException e) {
+                int aux = JOptionPane.showConfirmDialog(this, "¿Seguro que Desea Salir?", "SALIR", JOptionPane.YES_NO_OPTION);
+                if (aux == 0) {
+                    sw = 1;
+                } else {
+                    sw = 0;
+                }
+            }
+        } while (sw == 0);
     }//GEN-LAST:event_cmdActualizarActionPerformed
 
     private void cmdMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdMostrarActionPerformed
+        String aux;
+        aux = c.mostrar();
+        txtResultado.setText(aux);
 
-        txtResultado.setText(c.mostrar());
-        
         txtNumeroCuenta.setEditable(false);
         txtNumeroID.setEditable(false);
         txtSaldoActual.setEditable(false);
-        
+
         cmdCrear.setEnabled(false);
         cmdIngresar.setEnabled(true);
         cmdRetirar.setEnabled(true);
@@ -261,21 +350,51 @@ public class Principal extends javax.swing.JFrame {
         txtNumeroID.setText("");
         txtSaldoActual.setText("");
         txtResultado.setText("");
-        
+
         txtNumeroCuenta.requestFocusInWindow();
-        
+
         txtNumeroCuenta.setEditable(true);
         txtNumeroID.setEditable(true);
         txtSaldoActual.setEditable(true);
-        
+
         cmdCrear.setEnabled(true);
         cmdIngresar.setEnabled(false);
         cmdRetirar.setEnabled(false);
         cmdActualizar.setEnabled(false);
         cmdMostrar.setEnabled(true);
         cmdLimpiar.setEnabled(false);
-        
+
     }//GEN-LAST:event_cmdLimpiarActionPerformed
+
+    private void txtNumeroCuentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroCuentaKeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isDigit(c)) {
+            getToolkit().beep();
+
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNumeroCuentaKeyTyped
+
+    private void txtNumeroIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroIDKeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isDigit(c)) {
+            getToolkit().beep();
+
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNumeroIDKeyTyped
+
+    private void txtSaldoActualKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSaldoActualKeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isDigit(c)) {
+            getToolkit().beep();
+
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtSaldoActualKeyTyped
 
     /**
      * @param args the command line arguments
