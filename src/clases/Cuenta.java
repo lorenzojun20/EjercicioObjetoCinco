@@ -10,60 +10,65 @@ package clases;
  * @author Lorenzo
  */
 public class Cuenta {
-     private int NumCuenta;
-    private int Identificacion;
-    private double SaldoAct;
-    private double InteresAn;
+     private long numero_cuenta;
+    private long numero_identificacion;
+    private double saldo_actual;
 
-    public Cuenta(int numcuenta, int identificacion, double saldoact, double interesan) {
-        this.NumCuenta = numcuenta;
-        this.Identificacion = identificacion;
-        this.SaldoAct = saldoact;
-        this.InteresAn = interesan;
+    public Cuenta(int numero_cuenta, int numero_identificacion, double saldo_actual) {
+        this.numero_cuenta = numero_cuenta;
+        this.numero_identificacion = numero_identificacion;
+        this.saldo_actual = saldo_actual;
     }
 
-    public int getNumCuenta() {
-        return NumCuenta;
+    public long getNumero_cuenta() {
+        return numero_cuenta;
     }
 
-    public void setNumCuenta(int NumCuenta) {
-        this.NumCuenta = NumCuenta;
+    public void setNumero_cuenta(long numero_cuenta) {
+        this.numero_cuenta = numero_cuenta;
     }
 
-    public int getIdentificacion() {
-        return Identificacion;
+    public long getNumero_identificacion() {
+        return numero_identificacion;
     }
 
-    public void setIdentificacion(int Identificacion) {
-        this.Identificacion = Identificacion;
+    public void setNumero_identificacion(long numero_identificacion) {
+        this.numero_identificacion = numero_identificacion;
     }
 
-    public double getSaldoAct() {
-        return SaldoAct;
+    public double getSaldo_actual() {
+        return saldo_actual;
     }
 
-    public void setSaldoAct(double SaldoAct) {
-        this.SaldoAct = SaldoAct;
+    public void setSaldo_actual(double saldo_actual) {
+        this.saldo_actual = saldo_actual;
     }
 
-    public double getInteres() {
-        return InteresAn;
-    }
-
-    public void setInteres(double InteresAn) {
-        this.InteresAn = InteresAn;
-    }
-public double actualizar_saldo(){
+   
+public void actualizarSaldo(double ian){
+    double aux, aux2;
+    aux = this.getSaldo_actual()*(ian/365);
+    aux2 = this.getSaldo_actual() + aux;
+    this.setSaldo_actual(aux2);
+}
+public void ingresar(double ingreso){
+    double aux;
+    aux = ingreso + this.getSaldo_actual();
+    this.setSaldo_actual(aux);
+}
+public void retirar (double egreso){
+    double aux;
+    aux = this.getSaldo_actual() - egreso;
+    this.setSaldo_actual(aux);
+}
+public String mostrar(){
+    String aux;
+    aux = "El No. de la cuenta es: "+this.getNumero_cuenta()+"\n"
+            + " El No. de identificación es: "+this.getNumero_identificacion()+"\n"
+            + "El Saldo Actual es: "+this.getSaldo_actual();
     
-    double saldo_actualizado, interesdiario,aux;
-    
-    aux = this.InteresAn/365;
-    interesdiario = this.SaldoAct + aux;
-    this.SaldoAct = interesdiario;
-    saldo_actualizado = this.SaldoAct;
-    
-    return saldo_actualizado;
-    
+    return aux;
+}
     
     
     
@@ -71,5 +76,5 @@ public double actualizar_saldo(){
     
 
    
-}
+
 
